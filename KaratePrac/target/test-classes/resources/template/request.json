@@ -1,0 +1,12 @@
+{ 
+"requestHeader": { 
+"userId": "USZ1V56", 
+"alternateUserId": "USZ2IZB", 
+"messageReference": "999855f7-e58a-49de-96f0-a546de955f19", 
+"systemName": "eFileCaim" 
+}, 
+"claimReference":{
+         "claimNumber":"2100157645",
+         "prodTrngCode":"P"
+      }
+}

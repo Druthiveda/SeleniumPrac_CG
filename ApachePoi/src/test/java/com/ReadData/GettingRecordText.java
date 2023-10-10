@@ -1,0 +1,85 @@
+package com.ReadData;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class GettingRecordText {
+
+	public static void main(String[] args) throws InterruptedException, IOException {
+		// TODO Auto-generated method stub
+		File file = new File(".\\DataExcel\\ExcelData.xlsx");
+		FileInputStream fis = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sh = wb.getSheet("RecordsData");
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+		driver.manage().window().maximize();
+		Thread.sleep(3000);
+
+		driver.findElement(By.xpath("//input[@name='username']")).sendKeys("Admin");
+
+		driver.findElement(By.xpath("//input[@name='password']")).sendKeys("admin123");
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		Thread.sleep(3000);
+		// selecting PIM
+		driver.findElement(By.xpath("//span[text()='PIM']")).click();
+		Thread.sleep(3000);
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollBy(0,350)", "");
+		int rowcount = driver.findElements(By.xpath("//div[@class='oxd-table-body']/div")).size();
+
+		for (int i = 1; i <= rowcount; i++) {
+
+			WebElement record = driver.findElement(By.xpath("//div[@class='oxd-table-body']/div[" + i + "]"));
+			// System.out.println(record.getText());
+			String rowdata = record.getText();
+
+			rowdata = rowdata.replaceAll("\n", " ");
+
+			String[] row = rowdata.split(" ");
+
+			System.out.println(Arrays.toString(row));
+
+			System.out.println(rowcount);
+
+			XSSFRow rw = sh.getRow(0);
+
+			XSSFRow newRow = sh.createRow(i);
+
+			String array[] = { " " };
+
+			for (int j = 0; j < row.length; j++) {
+
+				XSSFCell cell = newRow.createCell(j);
+
+				cell.setCellValue(row[j]);
+			}
+		}
+		fis.close();
+
+		FileOutputStream fos = new FileOutputStream(file);
+		wb.write(fos);
+		fos.close();
+		driver.close();
+
+	}
+
+}

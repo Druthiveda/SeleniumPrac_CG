@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;com.ApachePoi&apos; to &apos;ApachePoi&apos;" description="Rename resource &apos;com.ApachePoi&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/com.ApachePoi" name="ApachePoi" stamp="1687365455735" updateReferences="true"/>
+</session>

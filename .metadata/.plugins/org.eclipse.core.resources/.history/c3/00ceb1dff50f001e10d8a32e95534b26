@@ -1,0 +1,94 @@
+package com.selenium;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class OrangeHrm {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+		driver.manage().window().maximize();
+		// Login
+		Thread.sleep(3000);
+		// User name
+		driver.findElement(By.xpath("//input[@name='username']")).sendKeys("Admin");
+		// password
+		driver.findElement(By.xpath("//input[@name='password']")).sendKeys("admin123");
+		// login
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		// Employee Registration
+		Thread.sleep(3000);
+		//selecting PIM
+		driver.findElement(By.xpath("//span[text()='PIM']")).click();
+        //Add button
+		Actions action = new Actions(driver);
+		Thread.sleep(3000);
+		action.moveToElement(driver.findElement(By.xpath("//div[@class='orangehrm-header-container']/button[normalize-space(text()='Add')]"))).click();
+		action.build().perform();
+		//action.moveToElement(driver.findElement(By.xpath("//div[@class='orangehrm-paper-container']/div/button[@type='button']"))).click();		
+		Thread.sleep(3000);
+	
+		driver.findElement(By.xpath("//input[@placeholder='First Name']")).sendKeys("Druthi");
+		
+		driver.findElement(By.xpath("//input[@placeholder='Middle Name']")).sendKeys("veda");
+		
+		driver.findElement(By.xpath("//input[@placeholder='Last Name']")).sendKeys("K");
+		Thread.sleep(3000);
+		
+		//toggle button
+		driver.findElement(By.xpath("//span[@class='oxd-switch-input oxd-switch-input--active --label-right']")).click();
+		//Username
+		driver.findElement(By.xpath("(//input[@class='oxd-input oxd-input--active'])[3]")).sendKeys("Usernme");		
+		Thread.sleep(3000);
+		//password
+		driver.findElement(By.xpath("(//div[@class='oxd-input-group oxd-input-field-bottom-space']/div[2]/input[contains(@type,password)])[7]")).sendKeys("Password1");		
+        Thread.sleep(2000);
+        //confirm password
+        driver.findElement(By.xpath("(//div[@class='oxd-input-group oxd-input-field-bottom-space']/div[2]/input[contains(@type,password)])[8]")).sendKeys("Password1");
+        //save
+        driver.findElement(By.xpath("//button[@class='oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space']")).click();
+        Thread.sleep(2000);
+        //Admin tab
+        driver.findElement(By.xpath("//span[text()='Admin']")).click();
+        //Add
+        Thread.sleep(3000);
+        action.moveToElement(driver.findElement(By.xpath("//div[@class='orangehrm-header-container']/button[normalize-space()='Add']"))).click();
+        action.build().perform();
+        //User role
+        Thread.sleep(3000);
+        WebElement usr_rle = driver.findElement(By.xpath("(//div[@class='oxd-select-wrapper'])[2]/div/div[text()='-- Select --']"));
+        usr_rle.click();
+        usr_rle.sendKeys(Keys.DOWN);
+        usr_rle.sendKeys(Keys.ENTER);
+        
+        //EmpName
+        Thread.sleep(3000);
+        WebElement empnme = driver.findElement(By.xpath("//input[@placeholder='Type for hints...']"));
+        empnme.sendKeys("Druthi veda K");
+        Thread.sleep(3000);
+        empnme.sendKeys(Keys.DOWN);
+        empnme.sendKeys(Keys.ENTER);
+        //Status
+        Thread.sleep(3000);
+        WebElement status = driver.findElement(By.xpath("(//div[@class='oxd-select-wrapper'])[2]/div/div[text()='-- Select --']"));
+        status.click();
+        status.sendKeys(Keys.DOWN);
+        status.sendKeys(Keys.ENTER);
+        //Username
+        driver.findElement(By.xpath("(//div[@class='oxd-input-group oxd-input-field-bottom-space'])[4]/div[2]/input[@class='oxd-input oxd-input--active']")).sendKeys("DruthiV");
+	}
+
+}
